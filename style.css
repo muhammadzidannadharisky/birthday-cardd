@@ -1,0 +1,501 @@
+/* ============================================================
+   RESET & ROOT VARIABLES
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --gold:        #c8a96e;
+  --gold-light:  #e8c882;
+  --gold-dim:    #8a6a3a;
+  --dark:        #0a0a12;
+  --dark2:       #12121e;
+  --dark3:       #1a1a28;
+  --text-cream:  #f0e8d8;
+  --text-muted:  #8a8070;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  overflow: hidden;
+}
+
+.section.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================
+   CANVAS BACKGROUNDS
+   ============================================================ */
+.bg-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#confetti-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ============================================================
+   NAV DOTS (right side)
+   ============================================================ */
+#nav-dots {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #5a5040;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.4s;
+}
+
+.nav-dot.active {
+  background: var(--gold);
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* ============================================================
+   SHARED CONTENT WRAPPER
+   ============================================================ */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 620px;
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ============================================================
+   SHARED EYEBROW TEXT
+   ============================================================ */
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+/* ============================================================
+   SHARED DIVIDER LINE
+   ============================================================ */
+.divider {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   SECTION 1 — INTRO
+   ============================================================ */
+#s1 {
+  background: var(--dark);
+}
+
+#s1 .content {
+  text-align: center;
+  animation: fadeInUp 1.5s ease both;
+  animation-delay: 0.5s;
+}
+
+#s1 .eyebrow {
+  margin-bottom: 28px;
+}
+
+#s1 h1 {
+  font-size: clamp(42px, 8vw, 72px);
+  font-weight: 300;
+  color: var(--text-cream);
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.italic-gold {
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 300;
+  color: var(--gold);
+  margin-bottom: 30px;
+}
+
+/* ============================================================
+   SECTION 2 — COUNTDOWN
+   ============================================================ */
+#s2 {
+  background: var(--dark2);
+}
+
+.countdown-ring {
+  position: relative;
+  z-index: 2;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+#countdown-num {
+  transition: all 0.3s ease;
+}
+
+.countdown-label {
+  position: absolute;
+  bottom: 32%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   SECTION 3 — NAME REVEAL
+   ============================================================ */
+#s3 {
+  background: var(--dark2);
+}
+
+.name-big {
+  font-size: clamp(60px, 14vw, 120px);
+  font-weight: 300;
+  color: var(--text-cream);
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.tagline {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 36px;
+}
+
+.btn-gold {
+  border: 1px solid var(--gold-dim);
+  background: rgba(180, 120, 50, 0.15);
+  color: var(--gold);
+  font-family: inherit;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-gold:hover {
+  background: rgba(180, 120, 50, 0.3);
+}
+
+/* ============================================================
+   SECTION 4 — PHOTO GRID
+   ============================================================ */
+#s4 {
+  background: var(--dark2);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.photo-cell {
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  background: #1a1a1a;
+}
+
+.photo-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  transition: transform 0.5s;
+  display: block;
+}
+
+.photo-cell:hover img {
+  transform: scale(1.04);
+}
+
+.photo-cell { transition: box-shadow 0.3s; }
+.photo-cell.glow { box-shadow: 0 0 0 2px var(--gold); }
+
+.photo-cell.last-cell {
+  position: relative;
+}
+
+.continue-link {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.continue-link:hover {
+  color: var(--gold);
+}
+
+/* ============================================================
+   SECTION 5 — MESSAGE CAROUSEL
+   ============================================================ */
+#s5 {
+  background: var(--dark2);
+}
+
+.message-card {
+  display: flex;
+  width: 100%;
+  max-height: 340px;
+  border: 0.5px solid rgba(200, 169, 110, 0.2);
+}
+
+.msg-photo {
+  flex: 0 0 42%;
+  overflow: hidden;
+}
+
+.msg-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  display: block;
+}
+
+.msg-text {
+  flex: 1;
+  background: #1a1a28;
+  padding: 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.msg-text p {
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-cream);
+  font-weight: 300;
+  text-align: left;
+}
+
+.carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.arr {
+  font-size: 16px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.3s;
+  user-select: none;
+}
+
+.arr:hover {
+  color: var(--gold);
+}
+
+.dot-track {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.msg-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.msg-dot.active {
+  background: var(--gold);
+}
+
+.continue-link-5 {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.continue-link-5:hover {
+  color: var(--gold);
+}
+
+/* ============================================================
+   SECTION 6 — HAPPY BIRTHDAY
+   ============================================================ */
+#s6 {
+  background: var(--dark2);
+}
+
+.hb-title {
+  font-size: clamp(48px, 10vw, 88px);
+  font-weight: 300;
+  color: var(--text-cream);
+  margin-bottom: 24px;
+}
+
+.heart {
+  font-size: 28px;
+  color: #c0546a;
+  display: block;
+  margin-bottom: 16px;
+  animation: pulse 1.5s infinite;
+}
+
+.hb-sub {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 36px;
+}
+
+.btn-replay {
+  border: 1px solid var(--gold-dim);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-replay:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ============================================================
+   MUSIC BUTTON (fixed bottom-left)
+   ============================================================ */
+#music-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-dim);
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+#music-btn:hover {
+  background: rgba(200, 169, 110, 0.15);
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+@keyframes countSpin {
+  0%   { opacity: 0; transform: scale(1.5); }
+  20%  { opacity: 1; transform: scale(1); }
+  80%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.5); }
+}
